@@ -14,13 +14,19 @@ const index: FC<indexProps> = () => {
     dateTime: null
   });
   return (
-    <div className='flex h-screen flex-col justify-center'>
-      <ReactCalendar
-        minDate={new Date()}
-        className='REACT-CALENDAR P-2'
-        view='month'
-        onClickDay={(date) => console.log(date)}
-      />
+    <div className='flex h-screen flex-col items-center justify-center'>
+      {date.justDate ? (
+        <div className='flex gap-4'></div>
+      ) : (
+        <ReactCalendar
+          minDate={new Date()}
+          className='REACT-CALENDAR P-2'
+          view='month'
+          onClickDay={(date) =>
+            setDate((prev) => ({ ...prev, justDate: date }))
+          }
+        />
+      )}
     </div>
   );
 };
