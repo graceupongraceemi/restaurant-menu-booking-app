@@ -13,6 +13,7 @@ const index: FC<indexProps> = () => {
     justDate: null,
     dateTime: null
   });
+
   return (
     <div className='flex h-screen flex-col items-center justify-center'>
       {date.justDate ? (
