@@ -1,6 +1,11 @@
 import { FC, useState } from 'react';
 import ReactCalendar from 'react-calendar';
 import { add, format } from 'date-fns';
+import {
+  INTERVAL,
+  STORE_CLOSING_TIME,
+  STORE_OPENING_TIME
+} from '../../constants/config';
 
 interface indexProps {}
 
@@ -15,14 +20,16 @@ const index: FC<indexProps> = () => {
     dateTime: null
   });
 
+  // console.log(date.dateTime);
+
   const getTimes = () => {
     if (!date.justDate) return;
 
     const { justDate } = date;
 
-    const beginning = add(justDate, { hours: 9 });
-    const end = add(justDate, { hours: 17 });
-    const interval = 30; // in minutes
+    const beginning = add(justDate, { hours: STORE_OPENING_TIME });
+    const end = add(justDate, { hours: STORE_CLOSING_TIME });
+    const interval = INTERVAL;
 
     const times = [];
     for (let i = beginning; i <= end; i = add(i, { minutes: interval })) {
