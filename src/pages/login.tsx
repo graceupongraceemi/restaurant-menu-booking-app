@@ -1,10 +1,12 @@
 import { useState, type FC, type ChangeEvent } from 'react';
 import { HiLockClosed } from 'react-icons/hi';
 import { trpc } from '../utils/trpc';
+import { useRouter } from 'next/router';
 
 interface loginProps {}
 
 const login: FC<loginProps> = ({}) => {
+  const router = useRouter();
   const [input, setInput] = useState({
     email: '',
     password: ''
@@ -15,7 +17,11 @@ const login: FC<loginProps> = ({}) => {
     setInput((prev) => ({ ...prev, [name]: value }));
   };
 
-  const { mutate: login, isError } = trpc.admin.login.useMutation();
+  const { mutate: login, isError } = trpc.admin.login.useMutation({
+    onSuccess: () => {
+      router.push('/dashboard');
+    }
+  });
 
   return (
     <div className='flex min-h-full items-center justify-center px-4 py-12 sm:px-6 lg:px-8'>
