@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server';
 import cookie from 'cookie';
 import { publicProcedure, router } from '../trpc';
-import { SignJWT } FROM 'jose';
+import { SignJWT } from 'jose';
 import { z } from 'zod'
 import { nanoid } from '@reduxjs/toolkit';
 
@@ -12,7 +12,7 @@ export const adminRouter = router({
       const { res } = ctx
       const { email, password } = input
       if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
-        // user is authenticated
+        // user is authenticated as admin
         const token = await new SignJWT({})
           .setProtectedHeader({ alg: 'HS256' })
           .setJti(nanoid())
