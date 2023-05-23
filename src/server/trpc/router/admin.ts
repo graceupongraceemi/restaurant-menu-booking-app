@@ -3,7 +3,8 @@ import cookie from 'cookie';
 import { publicProcedure, router } from '../trpc';
 import { SignJWT } from 'jose';
 import { z } from 'zod'
-import { nanoid } from '@reduxjs/toolkit';
+import { nanoid } from 'nanoid';
+import { getJwtSecretKey} from '../../../lib/auth'
 
 export const adminRouter = router({
     login: publicProcedure
