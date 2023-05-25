@@ -1,3 +1,5 @@
+import { jwtVerify } from 'jose';
+
 export function getJwtSecretKey(): string {
   const secret = process.env.JWT_SECRET_KEY;
 
@@ -7,3 +9,13 @@ export function getJwtSecretKey(): string {
 
   return secret;
 }
+
+export const verifyAuth = async (token: string) => {
+  try {
+    const verified = await jwtVerify(
+      token,
+      new TextEncoder().encode(getJwtSecretKey())
+    );
+    return verified.payload;
+  } catch (error) {}
+};
