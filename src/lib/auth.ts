@@ -1,5 +1,10 @@
 import { jwtVerify } from 'jose';
 
+interface UserJwtPayload {
+  jti: string;
+  iat: number;
+}
+
 export function getJwtSecretKey(): string {
   const secret = process.env.JWT_SECRET_KEY;
 
@@ -16,6 +21,8 @@ export const verifyAuth = async (token: string) => {
       token,
       new TextEncoder().encode(getJwtSecretKey())
     );
-    return verified.payload;
-  } catch (error) {}
+    return verified.payload as UserJwtPayload;
+  } catch (error) {
+    throw new Error('Your token is invalid');
+  }
 };
