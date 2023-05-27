@@ -1,6 +1,6 @@
 import { TRPCError } from '@trpc/server';
 import cookie from 'cookie';
-import { publicProcedure, router } from '../trpc';
+import { adminProcedure, publicProcedure, router } from '../trpc';
 import { SignJWT } from 'jose';
 import { z } from 'zod';
 import { nanoid } from 'nanoid';
@@ -39,5 +39,9 @@ export const adminRouter = router({
         code: 'UNAUTHORIZED',
         message: 'Invalid email or password'
       });
-    })
+    }),
+
+  sensitive: adminProcedure.mutation(() => {
+    return 'sensitive';
+  })
 });
