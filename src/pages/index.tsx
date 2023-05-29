@@ -2,9 +2,11 @@
 
 import { type NextPage } from 'next';
 import Head from 'next/head';
+import { useState } from 'react';
 import Calendar from '../components/Calendar';
 
 import { trpc } from '../utils/trpc';
+import { useState } from 'react';
 
 const Home: NextPage = () => {
   const [date, setData] = useState<DataType>({

@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "target": "es2017",
+    "baseUrl": ".",
+    "paths": {
+      "@types/*": ["src/utils/types/*"]
+    },
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "checkJs": true,
