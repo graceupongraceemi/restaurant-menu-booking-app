@@ -1,3 +1,5 @@
+'use client';
+
 import { type NextPage } from 'next';
 import Head from 'next/head';
 import Calendar from '../components/Calendar';
@@ -5,6 +7,11 @@ import Calendar from '../components/Calendar';
 import { trpc } from '../utils/trpc';
 
 const Home: NextPage = () => {
+  const [date, setData] = useState<DataType>({
+    justDate: null,
+    dateTime: null
+  });
+
   return (
     <>
       <Head>

@@ -15,13 +15,6 @@ interface DateType {
 }
 
 const index: FC<indexProps> = () => {
-  const [date, setDate] = useState<DateType>({
-    justDate: null,
-    dateTime: null
-  });
-
-  // console.log(date.dateTime);
-
   const getTimes = () => {
     if (!date.justDate) return;
 
