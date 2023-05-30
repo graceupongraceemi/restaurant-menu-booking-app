@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 import Calendar from '../components/Calendar';
 import { type DateTime } from '@types';
+import Spinner from '~/components/Spinner';
 
 const Home: NextPage = () => {
   const [date, setDate] = useState<DateTime>({
@@ -21,7 +22,14 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <Calendar setDate={setDate} date={date} />
+        {!date.dateTime && <Calendar setDate={setDate} date={date} />}
+        {date.dateTime && true ? (
+          <Menu />
+        ) : (
+          <div className='flex h-screen items-center justify-center'>
+            <Spinner />
+          </div>
+        )}
       </main>
     </>
   );
