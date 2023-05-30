@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useState } from 'react';
 import ReactCalendar from 'react-calendar';
 import { add, format } from 'date-fns';
 import {
@@ -6,15 +6,19 @@ import {
   STORE_CLOSING_TIME,
   STORE_OPENING_TIME
 } from '../../constants/config';
+import { type DateTime } from '@types';
 
-interface indexProps {}
+interface indexProps {
+  date: DateTime;
+  setDate: Dispatch<SetStateAction<DateTime>>;
+}
 
 interface DateType {
   justDate: Date | null;
   dateTime: Date | null;
 }
 
-const index: FC<indexProps> = () => {
+const index: FC<indexProps> = ({ setDate, date }) => {
   const getTimes = () => {
     if (!date.justDate) return;
 

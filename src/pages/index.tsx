@@ -4,12 +4,10 @@ import { type NextPage } from 'next';
 import Head from 'next/head';
 import { useState } from 'react';
 import Calendar from '../components/Calendar';
-
-import { trpc } from '../utils/trpc';
-import { useState } from 'react';
+import { type DateTime } from '@types';
 
 const Home: NextPage = () => {
-  const [date, setData] = useState<DataType>({
+  const [date, setDate] = useState<DateTime>({
     justDate: null,
     dateTime: null
   });
@@ -23,7 +21,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <Calendar />
+        <Calendar setDate={setDate} date={date} />
       </main>
     </>
   );
