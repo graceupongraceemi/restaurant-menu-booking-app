@@ -23,7 +23,7 @@ const Home: NextPage = () => {
 
       <main>
         {!date.dateTime && <Calendar setDate={setDate} date={date} />}
-        {date.dateTime && true ? (
+        {date.dateTime && false ? (
           <Menu />
         ) : (
           <div className='flex h-screen items-center justify-center'>
