@@ -2,7 +2,23 @@ import { FC } from 'react';
 
 interface menuProps {}
 
+type Input = {
+  name: string;
+  price: number;
+  categories: MultiValue<{ value: string; label: string }>;
+  file: undefined | File;
+};
+
+const initialInput = {
+  name: '',
+  price: 0,
+  categories: [],
+  file: undefined
+};
+
 const menu: FC<menuProps> = ({}) => {
+  const [input, setInput] = useState<Input>(initialInput);
+
   return (
     <>
       <div className=''>
@@ -12,7 +28,9 @@ const menu: FC<menuProps> = ({}) => {
             className='border-non bg-grey-200 h-12 rounded-sm'
             type='text'
             placeholder='name'
-            onChange={handleTextChange}
+            onChange={(e) =>
+              setInput((prev) => ({ ...prev, name: e.target.value }))
+            }
             value={input.name}
           />
 
