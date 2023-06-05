@@ -1,9 +1,10 @@
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import { FC, useEffect, useState } from 'react';
+import { type FC, useEffect, useState } from 'react';
 import Select from 'react-select';
 import { MultiValue } from 'react-select/dist/declarations/src';
-import { selectOptions } from 'src/utils/helpers';
+import { MAX_FILE_SIZE } from 'src/constants/config';
+import { selectOptions } from 'src/utils/helper';
 
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
@@ -36,6 +37,12 @@ const menu: FC<menuProps> = ({}) => {
 
     // clean up the preview
   }, [input.file]);
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files?.[0]) return setError('No file selected');
+    if (e.target.files[0].size > MAX_FILE_SIZE)
+      return setError('File size is too big') setInput((prev) => ({ ...prev, file: e.target.files![0]}))
+  };
 
   return (
     <>
