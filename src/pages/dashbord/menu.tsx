@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { type FC, useEffect, useState } from 'react';
-import Select from 'react-select';
+// import Select from 'react-select';
 import { MultiValue } from 'react-select/dist/declarations/src';
 import { MAX_FILE_SIZE } from 'src/constants/config';
 import { selectOptions } from 'src/utils/helper';
