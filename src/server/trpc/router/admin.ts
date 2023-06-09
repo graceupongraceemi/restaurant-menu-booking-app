@@ -41,7 +41,11 @@ export const adminRouter = router({
       });
     }),
 
-  sensitive: adminProcedure.mutation(() => {
-    return 'sensitive';
+  createPresignedUrl: adminProcedure.input(z.object({fileType: z.string()})).mutation(async ({input}) => {
+    const id = nanoid()
+    const ex = input.fileType.split('/')[1]
+    const key = `${id}.${ex}`
   })
+  
+
 });
