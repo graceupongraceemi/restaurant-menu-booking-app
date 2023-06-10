@@ -7,6 +7,7 @@ import { MultiValue } from 'react-select/dist/declarations/src';
 import { MAX_FILE_SIZE } from 'src/constants/config';
 import { selectOptions } from 'src/utils/helper';
 import { trpc } from 'src/utils/trpc';
+import type { Categories } from 'src/utils/types'
 
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
@@ -34,6 +35,7 @@ const menu: FC<menuProps> = ({}) => {
   // tRPC
 
   const {mutateAsync: createPresignedUrl } = trpc.admin.createPresignedUrl.useMutaion()
+  const {mutateAsync: addItem} = trpc.admin.addMenuItem.useMutation()
 
   useEffect(() => {
     // create the preview
@@ -80,6 +82,14 @@ const menu: FC<menuProps> = ({}) => {
 
   const addMenuItem = async () => {
     const key = await handleImageUpload()
+    if (!key) throw new Error ('No key')
+
+    await addItem({
+      imageKey: key,
+      name: input.name,
+      categories: input.categories.map((c) => c.value as Exclude<Categories, 'all'>),
+      price: input.price,
+    })
   }
 
 
