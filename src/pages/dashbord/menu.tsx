@@ -1,3 +1,4 @@
+import { AnyAaaaRecord } from 'dns';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { type FC, useEffect, useState } from 'react';
@@ -5,6 +6,7 @@ import { type FC, useEffect, useState } from 'react';
 import { MultiValue } from 'react-select/dist/declarations/src';
 import { MAX_FILE_SIZE } from 'src/constants/config';
 import { selectOptions } from 'src/utils/helper';
+import { trpc } from 'src/utils/trpc';
 
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
@@ -29,6 +31,10 @@ const menu: FC<menuProps> = ({}) => {
   const [preview, setPreview] = useState<string>('');
   const [error, setError] = useState<string>('');
 
+  // tRPC
+
+  const {mutateAsync: createPresignedUrl } = trpc.admin.createPresignedUrl.useMutaion()
+
   useEffect(() => {
     // create the preview
     if (!input.file) return;
@@ -43,6 +49,39 @@ const menu: FC<menuProps> = ({}) => {
     if (e.target.files[0].size > MAX_FILE_SIZE)
       return setError('File size is too big') setInput((prev) => ({ ...prev, file: e.target.files![0]}))
   };
+
+
+  const handleImageUpload = async () => {
+    const { file } = input
+    if(!file) return
+
+    const {fields, key, url}}  = await createPresignedUrl({fileType: file.type})
+  
+  
+    const data = {
+      ...fields,
+      'Content-Type': file.type,
+      file
+    }
+
+    const formData = new FormData()
+
+    Object.entries(data).forEach(([key, value]) => {
+      formData.append(key, value as any)
+    })
+
+    await fetch(url, {
+      method: 'POST',
+      body: formData,
+    })
+
+    return key
+  }
+
+  const addMenuItem = async () => {
+    const key = await handleImageUpload()
+  }
+
 
   return (
     <>
