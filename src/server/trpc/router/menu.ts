@@ -1,5 +1,9 @@
 import { publicProcedure, router } from '../trpc';
 import { s3 } from '@lib/s3';
+import { sleep } from '@tanstack/query-core/build/lib/utils'
+
+
+export const sleep =(ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const menuRouter = router({
   // Each menu items only contains its AWS key. Extend all items with their actual img url
@@ -20,6 +24,14 @@ export const menuRouter = router({
       })
     );
 
-    return withUrls;
+    return withUrls; 
+    })
+
+
+  checkMenuStatus: publicProcedure.mutation(async () => {
+    // Handle menu checking logic
+    await sleep(1000);
+
+    return { success: true };
   })
-});
+})
