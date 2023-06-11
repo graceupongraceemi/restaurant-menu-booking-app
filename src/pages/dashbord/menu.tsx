@@ -36,6 +36,7 @@ const menu: FC<menuProps> = ({}) => {
 
   const {mutateAsync: createPresignedUrl } = trpc.admin.createPresignedUrl.useMutaion()
   const {mutateAsync: addItem} = trpc.admin.addMenuItem.useMutation()
+  const {data: menuItems, refetch} = trpc.menu.getMenuItems.useQuery()
 
   useEffect(() => {
     // create the preview
