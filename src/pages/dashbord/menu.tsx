@@ -1,9 +1,10 @@
 import { AnyAaaaRecord } from 'dns';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import { setUncaughtExceptionCaptureCallback } from 'process';
 import { type FC, useEffect, useState } from 'react';
 // import Select from 'react-select';
-import { MultiValue } from 'react-select/dist/declarations/src';
+import type { MultiValue } from 'react-select/dist/declarations/src';
 import { MAX_FILE_SIZE } from 'src/constants/config';
 import { selectOptions } from 'src/utils/helper';
 import { trpc } from 'src/utils/trpc';
@@ -11,13 +12,13 @@ import type { Categories } from 'src/utils/types'
 
 const DynamicSelect = dynamic(() => import('react-select'), { ssr: false });
 
-interface menuProps {}
 
-type Input = {
-  name: string;
-  price: number;
-  categories: MultiValue<{ value: string; label: string }>;
-  file: undefined | File;
+
+interface Input  {
+  name: string
+  price: number
+  categories: MultiValue<{ value: string; label: string }>
+  file: undefined | File
 };
 
 const initialInput = {
@@ -27,7 +28,7 @@ const initialInput = {
   file: undefined
 };
 
-const menu: FC<menuProps> = ({}) => {
+const Menu: FC = ({}) => {
   const [input, setInput] = useState<Input>(initialInput);
   const [preview, setPreview] = useState<string>('');
   const [error, setError] = useState<string>('');
@@ -58,7 +59,7 @@ const menu: FC<menuProps> = ({}) => {
     const { file } = input
     if(!file) return
 
-    const {fields, key, url}}  = await createPresignedUrl({fileType: file.type})
+    const {fields, key, url}}  = await createPresignedUrl({fileType: file.type,})
   
   
     const data = {
@@ -91,6 +92,12 @@ const menu: FC<menuProps> = ({}) => {
       categories: input.categories.map((c) => c.value as Exclude<Categories, 'all'>),
       price: input.price,
     })
+
+    refetch()
+
+    // Reset input
+    setInput(initialInput)
+    setPreview('')
   }
 
 
