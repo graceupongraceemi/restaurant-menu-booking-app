@@ -38,6 +38,7 @@ const Menu: FC = ({}) => {
   const {mutateAsync: createPresignedUrl } = trpc.admin.createPresignedUrl.useMutaion()
   const {mutateAsync: addItem} = trpc.admin.addMenuItem.useMutation()
   const {data: menuItems, refetch} = trpc.menu.getMenuItems.useQuery()
+  const { mutateAsync: deleteMenuItem } = trpc.admin.deleteMenuItem.useMutation()
 
   useEffect(() => {
     // create the preview
@@ -99,6 +100,13 @@ const Menu: FC = ({}) => {
     setInput(initialInput)
     setPreview('')
   }
+
+
+  const handleDelete = async (imageKey: string, id: string) => {
+    await deleteMenuItem({ imageKey, id })
+    refetch()
+  }
+
 
 
   return (

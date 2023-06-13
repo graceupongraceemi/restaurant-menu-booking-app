@@ -17,7 +17,7 @@ export const menuRouter = router({
         return {
           ...menuItem,
           url: await s3.getSignedUrlPromise('getObject', {
-            Bucket: 'youtube-booking-software',
+            Bucket: 'restaurant-booking-software',
             Key: menuItem.imageKey
           })
         };
