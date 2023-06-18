@@ -17,6 +17,9 @@ const config = {
   i18n: {
     locales: ['en'],
     defaultLocale: 'en'
+  },
+  images: {
+    domains: ['restaurant-booking-software.s3.us-west-1.amazonaws.com']
   }
 };
 export default config;
