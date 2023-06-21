@@ -1,13 +1,12 @@
 'use client';
 
 import { type NextPage } from 'next';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { type DateTime } from '@types';
 import Head from 'next/head';
-import Calendar from 'src/pages/styles/Calendar';
-import { type Day } from '@prisma/client';
-import Spinner from '~/components/Spinner';
+import Calendar from '../components/Calendar';
+import Spinner from 'src/components/Spinner';
 import Menu from 'src/components/Menu';
-// import { prisma } from '../server/db/client';
 import { trpc } from 'src/utils/trpc';
 
 const Home: NextPage = () => {
@@ -15,6 +14,10 @@ const Home: NextPage = () => {
     justDate: null,
     dateTime: null
   });
+
+  useEffect(() => {
+    if (date.dateTime) checkMenuStatus();
+  }, [date]);
 
   //  tRPC
   const { mutate: checkMenuStatus, isSuccess } =
