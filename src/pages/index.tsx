@@ -1,18 +1,24 @@
 'use client';
 
 import { type NextPage } from 'next';
-import Head from 'next/head';
 import { useState } from 'react';
-import Calendar from '../components/Calendar';
-import { type DateTime } from '@types';
+import Head from 'next/head';
+import Calendar from 'src/pages/styles/Calendar';
+import { type Day } from '@prisma/client';
 import Spinner from '~/components/Spinner';
 import Menu from 'src/components/Menu';
+// import { prisma } from '../server/db/client';
+import { trpc } from 'src/utils/trpc';
 
 const Home: NextPage = () => {
   const [date, setDate] = useState<DateTime>({
     justDate: null,
     dateTime: null
   });
+
+  //  tRPC
+  const { mutate: checkMenuStatus, isSuccess } =
+    trpc.menu.checkMenuStatus.useMutation();
 
   return (
     <>
@@ -24,7 +30,7 @@ const Home: NextPage = () => {
 
       <main>
         {!date.dateTime && <Calendar setDate={setDate} date={date} />}
-        {date.dateTime && false ? (
+        {date.dateTime && isSuccess ? (
           <Menu />
         ) : (
           <div className='flex h-screen items-center justify-center'>
