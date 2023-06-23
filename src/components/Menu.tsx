@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { type FC, useState } from 'react';
 import { trpc } from 'src/utils/trpc';
 import Select from 'react-select';
 import { selectOptions } from '~/utils/helpers';
@@ -10,16 +10,17 @@ const Menu: FC<MenuProps> = ({}) => {
   const { data: menuItems } = trpc.menu.getMenuItems.useQuery();
   const [filter, setFilter] = useState<undefined | string>('');
 
+  const filteredMenuItems = menuItems?.filter((menuItem) => {
+    if (!filter) return true;
+    return menuItem.categories.includes(filter);
+  });
+
   return (
     <div className='bg-white'>
       <div className='lg:magitx-w-full mx-auto max-w-2xl px-4 py-16 sm:py-24'>
         <div className='flex w-full justify-between'>
           <h2 className='flex items-center gap-4 text-2xl font-bold tracking-tight text-gray-900'>
-            <HiArrowLeft
-              className='cursor-pointer'
-              onClick={() => router.push('/')}
-            />
-            On our menu for {format(parseISO(selectedTime), 'MMM do, yyyy')}
+            On our menu
           </h2>
           <Select
             onChange={(e) => {
@@ -40,22 +41,24 @@ const Menu: FC<MenuProps> = ({}) => {
                   <img
                     src={menuItem.url}
                     alt={menuItem.name}
-                    fill
-                    style={{ objectFit: 'cover' }}
+                    className='h-full w-full object-cover object-center lg:h-full lg:w-full'
                   />
                 </div>
               </div>
               <div className='mt-4 flex justify-between'>
                 <div>
                   <h3 className='text-sm text-gray-700'>
-                    <p>{menuItem.name}</p>
+                    <a /* href={product.href}  */>
+                      <span aria-hidden='true' className='absolute inset-0' />
+                      {menuItem.name}
+                    </a>
                   </h3>
                   <p className='mt-1 text-sm text-gray-500'>
                     {menuItem.categories.map((c) => capitalize(c)).join(', ')}
                   </p>
                 </div>
                 <p className='text-sm font-medium text-gray-900'>
-                  ${menuItem.price.toFixed(2)}
+                  ${menuItem.price}
                 </p>
               </div>
 
