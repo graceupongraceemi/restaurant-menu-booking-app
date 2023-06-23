@@ -6,7 +6,7 @@ import { type FC, useEffect, useState } from 'react';
 // import Select from 'react-select';
 import type { MultiValue } from 'react-select/dist/declarations/src';
 import { MAX_FILE_SIZE } from 'src/constants/config';
-import { selectOptions } from 'src/utils/helper';
+import { selectOptions } from '~/utils/helpers';
 import { trpc } from 'src/utils/trpc';
 import type { Categories } from 'src/utils/types'
 
